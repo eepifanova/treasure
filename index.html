@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treasure Game</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        .grid { display: grid; grid-template-columns: repeat(10, 32px); grid-template-rows: repeat(10, 32px); margin: 20px auto; width: max-content; position: relative; }
+        .cell { width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; position: relative; border: 1px solid lightgray; background-color: white; }
+        .exit { background-color: green; }
+        .wall-top { position: absolute; width: 30px; height: 2px; background-color: black; top: -2px; left: 0; }
+        .wall-left { position: absolute; width: 2px; height: 30px; background-color: black; top: 0; left: -2px; }
+        .wall-bottom { position: absolute; width: 30px; height: 2px; background-color: black; bottom: -2px; left: 0; }
+        .wall-right { position: absolute; width: 2px; height: 30px; background-color: black; top: 0; right: -2px; }
+    </style>
+</head>
+<body>
+    <h1>Treasure Game</h1>
+    <div id="map" class="grid"></div>
+    <script>
+        const size = 10;
+        const mapContainer = document.getElementById("map");
+        const map = Array.from({ length: size }, () => Array(size).fill(''));
+
+        function createWall(row, col, type) {
+            const wall = document.createElement("div");
+            wall.classList.add(type);
+            mapContainer.children[row * size + col].appendChild(wall);
+        }
+ 
+        function placeBorders() {
+            for (let i = 0; i < size; i++) {
+                createWall(0, i, "wall-top"); // Top border
+                createWall(size - 1, i, "wall-bottom"); // Bottom border
+                createWall(i, 0, "wall-left"); // Left border
+                createWall(i, size - 1, "wall-right"); // Right border
+            }
+        }
+
+        function renderMap() {
+            for (let r = 0; r < size; r++) {
+                for (let c = 0; c < size; c++) {
+                    const cell = document.createElement("div");
+                    cell.classList.add("cell");
+                    mapContainer.appendChild(cell);
+                }
+            }
+            placeBorders();
+        }
+
+        renderMap();
+    </script>
+    <p>&copy; 2025 Treasure Game</p>
+</body>
+</html>
